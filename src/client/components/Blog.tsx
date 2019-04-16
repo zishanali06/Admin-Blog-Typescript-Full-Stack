@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Blogcard from './Blogcard';
+import { json } from '../utils/api';
 
 export default class Blog extends React.Component<IBlogProps, IBlogState> {
 
@@ -18,8 +19,7 @@ export default class Blog extends React.Component<IBlogProps, IBlogState> {
     }
 
     async componentDidMount() {
-        let r = await fetch('/api/blogs');
-        let blogposts = await r.json();
+        let blogposts = await json('/api/blogs');
         this.setState({ blogposts });
     }
 

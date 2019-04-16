@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { json, User } from '../utils/api';
 
 export default class Admin extends React.Component<AdminProps, AdminState>{
     constructor(props: AdminProps) {
@@ -32,26 +33,44 @@ export default class Admin extends React.Component<AdminProps, AdminState>{
         this.setState({ tag: e.target.value })
     }
 
-    handleClick = (e: React.MouseEvent) => {
+    //ASK LUKE QUESTION
+    //ASK LUKE QUESTION
+    //ASK LUKE QUESTION
+    //ASK LUKE QUESTION
+    //ASK LUKE QUESTION
+    //ASK LUKE QUESTION
+    //ASK LUKE QUESTION
+    //WHY ASYNC?????
+    handleClick = async (e: React.MouseEvent) => {
         e.preventDefault();
+        
         let newpost = {
             title: this.state.title,
             content: this.state.content,
             tagid: this.state.tag
         }
-        fetch('/api/blogs/add', {
-            method: "POST",
-            mode: "cors",
-            cache: "no-cache",
-            credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            redirect: "follow",
-            referrer: "no-referrer",
-            body: JSON.stringify(newpost)
-        }).then(() => this.props.history.push('/'))
-        .catch(e => console.log(e));
+        try {
+            let result = await json('/api/blogs/add', 'POST', newpost);
+            this.props.history.push('/');
+        } catch (error) {
+            throw error;
+        }
+        
+
+        // fetch('/api/blogs/add', {
+        //     method: "POST",
+        //     mode: "cors",
+        //     cache: "no-cache",
+        //     credentials: "same-origin",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     redirect: "follow",
+        //     referrer: "no-referrer",
+        //     body: JSON.stringify(newpost)
+        // })
+        // .then(() => this.props.history.push('/'))
+        // .catch(e => console.log(e));
     }
 
     render() {
