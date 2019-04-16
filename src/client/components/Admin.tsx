@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-export default class Addpost extends React.Component<AddpostProps, AddpostState>{
-    constructor(props: AddpostProps) {
+export default class Admin extends React.Component<AdminProps, AdminState>{
+    constructor(props: AdminProps) {
         super(props)
         this.state = {
             title: "",
@@ -89,11 +89,11 @@ export default class Addpost extends React.Component<AddpostProps, AddpostState>
     }
 }
 
-interface AddpostProps extends RouteComponentProps {
+interface AdminProps extends RouteComponentProps {
 
 }
 
-interface AddpostState {
+interface AdminState {
     title: string,
     tag: string,
     content: string,

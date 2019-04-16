@@ -4,8 +4,9 @@ import { BrowserRouter as Router, Switch, Link, Route } from 'react-router-dom';
 import './scss/app';
 import Blog from './components/Blog';
 import Onepost from './components/Onepost';
-import Addpost from './components/Addpost';
+import Admin from './components/Admin';
 import Changepost from './components/Changepost';
+import Login from './components/Login';
 
 export default class App extends React.Component<IAppProps, IAppState> {
 
@@ -44,15 +45,19 @@ export default class App extends React.Component<IAppProps, IAppState> {
                                     <Link to='/' className="nav-link">Home</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to='/blog/add' className="nav-link">Add Blog Post</Link>
+                                    <Link to='/blog/admin' className="nav-link">Admin</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link to='/blog/login' className="nav-link">Login</Link>
                                 </li>
                             </ul>
                         </div>
                     </nav>
                     <Switch>
                         <Route exact path='/' component={Blog}></Route>
-                        <Route exact path='/blog/add' component={Addpost}></Route>
+                        <Route exact path='/blog/admin' component={Admin}></Route>
                         <Route exact path='/blog/edit' component={Changepost}></Route>
+                        <Route exact path='/blog/login' component={Login}></Route>
                         <Route exact path='/blog/:id' component={Onepost}></Route>
                     </Switch>
                 </main>
