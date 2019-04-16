@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { json, SetAccessToken } from '../utils/api';
 import { RouteComponentProps } from 'react-router-dom';
 
 export default class Login extends React.Component<LoginProps, LoginState>{
@@ -22,26 +23,28 @@ export default class Login extends React.Component<LoginProps, LoginState>{
         this.setState({ password: e.target.value })
     }
 
-    handleClick = (e: React.MouseEvent) => {
+    handleClick = async (e: React.MouseEvent) => {
         e.preventDefault();
-        // let newpost = {
-        //     title: this.state.title,
-        //     content: this.state.content,
-        //     tagid: this.state.tag
-        // }
-        // fetch('/api/blogs/add', {
-        //     method: "POST",
-        //     mode: "cors",
-        //     cache: "no-cache",
-        //     credentials: "same-origin",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     redirect: "follow",
-        //     referrer: "no-referrer",
-        //     body: JSON.stringify(newpost)
-        // }).then(() => this.props.history.push('/'))
-        // .catch(e => console.log(e));
+
+        try{
+            let result = await json ('/auth/login', 'POST', {
+                email: this.state.email,
+                password: this.state.password
+            });
+
+            if(result) {
+                SetAccessToken(result.token, { userid: result.userid, role: result.role });
+                if(result.role === 'guest') {
+                    this.props.history.push('/admin');
+                } else {
+                    this.props.history.push('/');
+                }
+            } else {
+                //checking a login status
+            }
+        } catch (e) {
+            throw e;
+        }
     }
 
     render() {
