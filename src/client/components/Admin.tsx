@@ -14,11 +14,14 @@ export default class Admin extends React.Component<AdminProps, AdminState>{
     }
 
     async componentDidMount() {
-        let r = await fetch('/api/blogs/alltags');
-        let data = await r.json();
-        let newarray = Object.keys(data).map(key => data[key].name);
-        console.log(newarray);
-        this.setState({ tagarray: newarray });
+        if(!User || User.userid === null || User.role !== 'admin') {
+            this.props.history.replace('/login');
+        } else {
+            let r = await fetch('/api/blogs/alltags');
+            let data = await r.json();
+            let newarray = Object.keys(data).map(key => data[key].name);
+            this.setState({ tagarray: newarray });
+        }
     }
 
     handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
